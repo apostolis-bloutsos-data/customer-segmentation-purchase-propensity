@@ -458,6 +458,7 @@ customer-segmentation-purchase-propensity/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
+├── LICENSE
 │
 ├── notebooks/
 │   ├── 01_data_ingestion.ipynb
