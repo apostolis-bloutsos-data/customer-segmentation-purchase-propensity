@@ -635,6 +635,15 @@ Possible next steps include:
 
 ---
 
+## License
+
+The code in this repository is available under the [MIT License](LICENSE).
+
+The Online Retail II dataset is provided by the UCI Machine Learning Repository
+and remains subject to the terms of its original source.
+
+---
+
 ## Data source
 
 **UCI Machine Learning Repository — Online Retail II**
