@@ -648,5 +648,8 @@ and remains subject to the terms of its original source.
 
 **UCI Machine Learning Repository — Online Retail II**
 
-The dataset contains transactional data from a UK-based non-store online
-retailer covering December 2009 through December 2011.
+Chen, D. (2012). *Online Retail II* [Dataset].  
+DOI: `10.24432/C5CG6D`
+
+The source dataset is licensed under **CC BY 4.0**. The Parquet datasets
+included in this repository are derived from the original UCI data.
