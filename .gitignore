@@ -1,0 +1,19 @@
+# Original source data
+data/raw/*
+!data/raw/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+.env
+.venv/
+venv/
+
+# Operating systems
+.DS_Store
+Thumbs.db
