@@ -1,0 +1,15 @@
+feature,coefficient,abs_coefficient
+frequency,0.438,0.438
+recency_days,-0.42,0.42
+purchases_last_90d,0.37,0.37
+monetary_value,0.323,0.323
+unique_products_last_90d,0.308,0.308
+tenure_days,-0.271,0.271
+items_last_90d,-0.268,0.268
+cancellation_count,0.222,0.222
+unique_products,0.209,0.209
+monetary_last_90d,-0.158,0.158
+cancellation_value,-0.146,0.146
+total_items,0.083,0.083
+average_order_value,-0.055,0.055
+cancellation_value_rate,0.004,0.004

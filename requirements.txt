@@ -1,0 +1,9 @@
+# Notebook dependencies
+
+pandas
+numpy
+pyarrow
+openpyxl
+requests
+scikit-learn
+matplotlib
