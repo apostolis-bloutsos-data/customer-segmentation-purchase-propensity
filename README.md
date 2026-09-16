@@ -6,9 +6,8 @@ dataset to answer two related business questions:
 1. **What types of customers exist in the customer base?**
 2. **Which existing customers are most likely to purchase again within the next 90 days?**
 
-The project combines customer segmentation with supervised propensity modelling.
-It covers data ingestion, transaction cleaning, customer-level feature
-engineering, K-Means clustering, time-aware target construction, model
+The project combines customer segmentation with supervised propensity modelling, 
+from transaction cleaning and feature engineering through clustering, model 
 comparison, threshold selection and held-out evaluation.
 
 The two analyses use different time frames. Segmentation uses the complete
@@ -208,7 +207,7 @@ The final model uses **four clusters**.
 ![Customer and revenue share by segment](reports/figures/segment_customer_vs_revenue_share.png)
 
 The revenue concentration shows why customer count alone is not enough to
-measure commercial importance: fewer than one quarter of customers account for
+measure commercial importance since fewer than one quarter of customers account for
 almost three quarters of historical merchandise revenue.
 
 ![Relative customer behaviour by segment](reports/figures/segment_relative_behavior.png)
@@ -237,8 +236,8 @@ appropriate than expensive incentives for the group as a whole.
 
 ### Temporal prediction design
 
-Predictive modelling requires a clear separation between historical information
-and future customer behaviour.
+For the propensity model, historical customer information has to be separated 
+from the future period used to define the target.
 
 A historical cutoff of **9 September 2011** was established.
 
@@ -296,10 +295,9 @@ A stratified 80/20 customer-level train/test split was created.
 The held-out test population was not used for candidate-model comparison or
 threshold selection.
 
-A dummy classifier established the minimum benchmark. Because the non-repeat
-class is slightly larger, a majority-class classifier can achieve approximately
-56.5% accuracy while identifying no repeat purchasers. This shows why accuracy
-alone is not sufficient for this problem.
+A majority-class dummy model, used as the minimum benchmark reaches about 
+56.5% accuracy while identifying no repeat purchasers, which makes accuracy 
+a poor metric to use on its own here.
 
 ### Logistic Regression preprocessing
 
@@ -323,8 +321,8 @@ fold.
 
 The nonlinear models did not improve predictive performance.
 
-Logistic Regression was retained because it combined the strongest
-cross-validated performance with greater simplicity and interpretability.
+Logistic Regression had the best cross-validated results and was also the 
+simplest model to interpret, so it was kept as the final model.
 
 ---
 
@@ -345,8 +343,8 @@ Positive coefficients are associated with higher predicted repeat-purchase
 propensity, while negative coefficients are associated with lower propensity,
 holding the other predictors constant.
 
-Several behavioural variables contain overlapping information. Individual
-coefficients are therefore interpreted as conditional predictive associations
+Several predictors contain overlapping information, so 
+the coefficients should be read as predictive associations 
 rather than causal effects.
 
 The complete coefficient table is available in:
@@ -357,11 +355,8 @@ The complete coefficient table is available in:
 
 ## Operating-threshold selection
 
-The default probability threshold of 0.50 was not assumed to be the appropriate
-decision rule.
-
-Threshold selection was performed using **out-of-fold probabilities from the
-training population only**.
+Rather than using 0.50 by default, several operating 
+thresholds were compared using out-of-fold training predictions.
 
 The maximum observed OOF F1 score occurred near **0.39**. A rounded threshold of
 **0.40** was selected because it produced virtually identical performance while
@@ -384,8 +379,8 @@ The held-out ROC-AUC was **0.786**, compared with approximately **0.798**
 out-of-fold, while Average Precision was **0.759**, compared with approximately
 **0.770** out-of-fold.
 
-The relatively small difference suggests that performance carries over
-reasonably well to customers not involved in model development.
+The held-out results were close to the cross-validation results, 
+with no large drop on unseen customers.
 
 At the selected threshold of 0.40:
 
@@ -398,9 +393,9 @@ At the selected threshold of 0.40:
 The held-out Brier score was **0.184**, compared with roughly **0.246** from
 predicting the same repeat-purchase prevalence for every customer.
 
-This suggests that the predicted probabilities contain useful information beyond
-the overall repeat-purchase rate. A dedicated calibration analysis would still
-be needed before treating them as precisely calibrated purchase probabilities.
+The probabilities carry more information than simply 
+assigning the same base rate to every customer. A full calibration analysis was not performed, 
+so the probabilities should not be treated as perfectly calibrated probabilities.
 
 ---
 
@@ -410,26 +405,24 @@ The project addresses two complementary customer-analytics questions.
 
 ### Customer segmentation — who are our customers?
 
-Segmentation provides a broader view of the customer base and helps determine
-the type of treatment or engagement that may be appropriate for different
-behavioural groups.
+Segmentation gives a broader view of the customer base 
+and suggests which type of action may make sense for each group.
 
 ### Repeat-purchase propensity — who is likely to buy again soon?
 
 The supervised model estimates the probability that an existing customer will
 make another valid merchandise purchase within the following 90 days.
 
-It provides an additional prioritization layer for deciding which customers
-should receive attention first.
+The propensity score can then help decide which customers to prioritize first.
 
 ### Combined decision logic
 
 In practice, segmentation and propensity could be calculated at the same
 scoring date and used together.
 
-The segment would help determine **how a customer should be treated**, while the
-propensity score would help determine **how strongly or urgently that customer
-should be prioritized**.
+The segment suggests **what kind of action may be 
+appropriate**, while the propensity score helps decide 
+**who to prioritize first**.
 
 | Customer segment | Higher repeat-purchase propensity | Lower repeat-purchase propensity |
 |---|---|---|
@@ -550,28 +543,6 @@ The original Excel workbook is intentionally not stored in version control.
 
 ---
 
-## Main output artifacts
-
-### Processed data
-
-- `customer_features.parquet` — customer-level segmentation features
-- `customer_segments.parquet` — final customer segment assignments
-- `propensity_dataset.parquet` — point-in-time predictors and 90-day target
-- `test_customer_propensity_scores.parquet` — held-out customer probabilities,
-  classifications and historical outcomes
-
-### Reporting tables
-
-- `kmeans_candidate_evaluation.csv`
-- `segment_business_summary.csv`
-- `model_comparison.csv`
-- `logistic_coefficients.csv`
-- `threshold_comparison.csv`
-- `final_test_metrics.csv`
-- `final_confusion_matrix.csv`
-
----
-
 ## Limitations
 
 **Single retailer and historical period.**  
@@ -610,7 +581,7 @@ date.
 
 ## Possible extensions
 
-Possible next steps include:
+A few possible next steps could include:
 
 - repeated temporal backtesting across several historical cutoffs;
 - probability calibration analysis;
